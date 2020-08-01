@@ -18,7 +18,7 @@ class Index_generation extends Dbh
                 }
                 if($this->max >= $total)
                 {
-                    $index = round(3.0 - (round((($total/$this->max)*3),2)),2);
+                    $index = round((($total/$this->max)*3),2);
                     if($index == 0)
                     {
                         $index = 0.01;
@@ -37,7 +37,7 @@ class Index_generation extends Dbh
                         $model = $row['model'];
                         $engine_type = $row['engine_type'];
                         $total_general = $row['total_general'];
-                        $index = round(3.0 - (round((($total_general/$this->max)*3),2)),2);
+                        $index = round((($total_general/$this->max)*3),2);
                         if($index == 0)
                         {
                             $index = 0.01;
@@ -46,7 +46,7 @@ class Index_generation extends Dbh
                         $query->bind_param("sss", $index, $model, $engine_type);
                         $query->execute();
                     }
-                    $index = round(3.0 - (round((($total/$this->max)*3),2)),2);
+                    $index = round((($total/$this->max)*3),2);
                     if($index == 0)
                     {
                         $index = 0.01;
@@ -59,7 +59,7 @@ class Index_generation extends Dbh
             }
             else
             {
-                $index = round(3.0 - (round((($total/$total)*3),2)),2);
+                $index = round((($total/$total)*3),2);
                 if($index == 0)
                 {
                     $index = 0.01;
@@ -90,7 +90,7 @@ class Index_generation extends Dbh
                     }
                     if($this->max > $total)
                     {
-                        $index = round(3.0 - (round((($total/$this->max)*3),2)),2);
+                        $index = round((($total/$this->max)*3),2);
                         if($index == 0)
                         {
                             $index = 0.01;
@@ -127,7 +127,7 @@ class Index_generation extends Dbh
                 $model = $row['model'];
                 $engine = $row['engine_type'];
                 $total = $row['total_general'];
-                $index = round(3.0 - (round((($total/$this->max)*3),2)),2);
+                $index = round((($total/$this->max)*3),2);
                 if($index == 0)
                 {
                     $index = 0.01;
@@ -154,12 +154,12 @@ class Index_generation extends Dbh
                 }
                 if($this->max >= $total)
                 {
-                    $index = round(2.0 - (round((($total/$this->max)*2),2)),2);
+                    $index = round((($total/$this->max)*2),2);
                     if($index == 0)
                     {
                         $index = 0.01;
                     }
-                    $query = $db->prepare("INSERT INTO general_standard(vehicle_type, brand, model, engine_type,bonnet, door, front_bumper, rear_bumper, front_headlight, rear_headlight, side_mirror, tail_light, clutch_plate, brake_pad, front_windsheild, rear_windsheild, ac_evaporator, radiator, battery, total_acc, index_acc) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
+                    $query = $db->prepare("INSERT INTO general_standard(vehicle_type, brand, model, engine_type,bonnet, door, front_bumper, rear_bumper, front_headlight, rear_headlight, side_mirror, tail_light, clutch_plate, barke_pad, front_windsheild, rear_windsheild, ac_evaporator, radiator, battery, total_acc, index_acc) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
                     $query->bind_param("sssssssssssssssssssss", $vehicle_type, $brand, $model, $engine_type,$part1,$part2,$part3,$part4,$part5,$part6,$part7,$part8,$part9,$part10,$part11,$part12,$part13,$part14,$part15,$total, $index);
                     $query->execute();
                     $this->closeConnect();
@@ -173,7 +173,7 @@ class Index_generation extends Dbh
                         $model = $row['model'];
                         $engine_type = $row['engine_type'];
                         $total_acc = $row['total_acc'];
-                        $index = round(2.0 - (round((($total_acc/$this->max)*2),2)),2);
+                        $index = round((($total_acc/$this->max)*2),2);
                         if($index == 0)
                         {
                             $index = 0.01;
@@ -182,12 +182,12 @@ class Index_generation extends Dbh
                         $query->bind_param("sss", $index, $model, $engine_type);
                         $query->execute();
                     }
-                    $index = round(2.0 - (round((($total/$this->max)*2),2)),2);
+                    $index = round((($total/$this->max)*2),2);
                     if($index == 0)
                     {
                         $index = 0.01;
                     }
-                    $query = $db->prepare("INSERT INTO general_standard(vehicle_type, brand, model, engine_type,bonnet, door, front_bumper, rear_bumper, front_headlight, rear_headlight, side_mirror, tail_light, clutch_plate, brake_pad, front_windsheild, rear_windsheild, ac_evaporator, radiator, battery, total_acc, index_acc) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
+                    $query = $db->prepare("INSERT INTO general_standard(vehicle_type, brand, model, engine_type,bonnet, door, front_bumper, rear_bumper, front_headlight, rear_headlight, side_mirror, tail_light, clutch_plate, barke_pad, front_windsheild, rear_windsheild, ac_evaporator, radiator, battery, total_acc, index_acc) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
                     $query->bind_param("sssssssssssssssssssss", $vehicle_type, $brand, $model, $engine_type,$part1,$part2,$part3,$part4,$part5,$part6,$part7,$part8,$part9,$part10,$part11,$part12,$part13,$part14,$part15,$total, $index);
                     $query->execute();
                     $this->closeConnect();
@@ -195,12 +195,12 @@ class Index_generation extends Dbh
             }
             else
             {
-                $index = round(2.0 - (round((($total/$total)*2),2)),2);
+                $index = round((($total/$total)*2),2);
                 if($index == 0)
                 {
                     $index = 0.01;
                 }
-                $query = $db->prepare("INSERT INTO general_standard(vehicle_type, brand, model, engine_type,bonnet, door, front_bumper, rear_bumper, front_headlight, rear_headlight, side_mirror, tail_light, clutch_plate, brake_pad, front_windsheild, rear_windsheild, ac_evaporator, radiator, battery, total_acc, index_acc) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
+                $query = $db->prepare("INSERT INTO general_standard(vehicle_type, brand, model, engine_type,bonnet, door, front_bumper, rear_bumper, front_headlight, rear_headlight, side_mirror, tail_light, clutch_plate, barke_pad, front_windsheild, rear_windsheild, ac_evaporator, radiator, battery, total_acc, index_acc) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
                 $query->bind_param("sssssssssssssssssssss", $vehicle_type, $brand, $model, $engine_type,$part1,$part2,$part3,$part4,$part5,$part6,$part7,$part8,$part9,$part10,$part11,$part12,$part13,$part14,$part15,$total, $index);
                 $query->execute();
                 $this->closeConnect();
@@ -213,7 +213,7 @@ class Index_generation extends Dbh
             {
                 $slno = $row['slno'];
             }
-            $query = $db->prepare("UPDATE general_standard SET vehicle_type=?, brand=?, model=?, engine_type=?,bonnet=?, door=?, front_bumper=?, rear_bumper=?, front_headlight=?, rear_headlight=?, side_mirror=?, tail_light=?, clutch_plate=?, brake_pad=?, front_windsheild=?, rear_windsheild=?, ac_evaporator=?, radiator=?, battery=?, total_acc=? WHERE slno=?;");
+            $query = $db->prepare("UPDATE general_standard SET vehicle_type=?, brand=?, model=?, engine_type=?,bonnet=?, door=?, front_bumper=?, rear_bumper=?, front_headlight=?, rear_headlight=?, side_mirror=?, tail_light=?, clutch_plate=?, barke_pad=?, front_windsheild=?, rear_windsheild=?, ac_evaporator=?, radiator=?, battery=?, total_acc=? WHERE slno=?;");
             $query->bind_param("sssssssssssssssssssss", $vehicle_type, $brand, $model, $engine_type,$part1,$part2,$part3,$part4,$part5,$part6,$part7,$part8,$part9,$part10,$part11,$part12,$part13,$part14,$part15,$total, $slno);
             $query->execute();
             $result = $db->query("SELECT MAX(total_acc) as max_total FROM general_standard;");
@@ -225,7 +225,7 @@ class Index_generation extends Dbh
                 }
                 if($this->max > $total)
                 {
-                    $index = round(2.0 - (round((($total/$this->max)*2),2)),2);
+                    $index = round((($total/$this->max)*2),2);
                     if($index == 0)
                     {
                         $index = 0.01;
@@ -261,7 +261,7 @@ class Index_generation extends Dbh
                 $model = $row['model'];
                 $engine = $row['engine_type'];
                 $total = $row['total_acc'];
-                $index = round(2.0 - (round((($total/$this->max)*2),2)),2);
+                $index = round((($total/$this->max)*2),2);
                 if($index == 0)
                 {
                     $index = 0.01;
@@ -297,7 +297,7 @@ class Index_generation extends Dbh
                     }
                     if($this->max >= $labour_cost)
                     {
-                        $index = round(1.0 - (round((($labour_cost/$this->max)),2)),2);
+                        $index = round((($labour_cost/$this->max)),2);
                         if($index == 0)
                         {
                             $index = 0.01;
@@ -334,7 +334,7 @@ class Index_generation extends Dbh
                 $model = $row['model'];
                 $engine = $row['engine_type'];
                 $labour_cost = $row['labour_cost'];
-                $index = round(1.0 - (round(($labour_cost/$this->max),2)),2);
+                $index = round(($labour_cost/$this->max),2);
                 if($index == 0)
                 {
                     $index = 0.01;
@@ -370,7 +370,7 @@ class Index_generation extends Dbh
                     }
                     if($this->max >= $insurance)
                     {
-                        $index = round(1.0 - (round((($insurance/$this->max)),2)),2);
+                        $index = round((($insurance/$this->max)),2);
                         if($index == 0)
                         {
                             $index = 0.01;
@@ -407,7 +407,7 @@ class Index_generation extends Dbh
                 $model = $row['model'];
                 $engine = $row['engine_type'];
                 $insurance = $row['insurance'];
-                $index = round(1.0 - (round((($insurance/$this->max)),2)),2);
+                $index = round((($insurance/$this->max)),2);
                 if($index == 0)
                 {
                     $index = 0.01;
@@ -433,7 +433,7 @@ class Index_generation extends Dbh
             }
             if($this->max >= $total)
             {
-                $index = round(3.0 - (round((($total/$this->max)*3),2)),2);
+                $index = round((($total/$this->max)*3),2);
                 if($index == 0)
                 {
                     $index = 0.01;
@@ -451,7 +451,7 @@ class Index_generation extends Dbh
                 {
                     $slno = $row['slno'];
                     $cost = $row['cost'];
-                    $index = round(3.0 - (round((($cost/$this->max)*3),2)),2);
+                    $index = round((($cost/$this->max)*3),2);
                     if($index == 0)
                     {
                         $index = 0.01;
@@ -460,7 +460,7 @@ class Index_generation extends Dbh
                     $query->bind_param("ss", $index, $slno);
                     $query->execute();
                 }
-                $index = round(3.0 - (round((($total/$this->max)*3),2)),2);
+                $index = round((($total/$this->max)*3),2);
                 if($index == 0)
                 {
                     $index = 0.01;
@@ -473,7 +473,7 @@ class Index_generation extends Dbh
         }
         else
         {
-            $index = round(3.0 - (round((($total/$total)*3),2)),2);
+            $index = round((($total/$total)*3),2);
             if($index == 0)
             {
                 $index = 0.01;
@@ -489,7 +489,7 @@ class Index_generation extends Dbh
         $db = $this->Connect();
         $from = 1;
         $to = 10000;
-        $result = $db->query("SELECT MAX(mileage) as max_mileage FROM service_details WHERE mileage;");
+        $result = $db->query("SELECT MAX(mileage) as max_mileage FROM service_details;");
         if($result->num_rows > 0)
         {
             while($row = $result->fetch_assoc())
@@ -510,7 +510,7 @@ class Index_generation extends Dbh
                     {
                         $slno = $row['slno'];
                         $cost = $row['cost'];
-                        $index = round(3.0 - (round((($cost/$this->max)*3),2)),2);
+                        $index = round((($cost/$this->max)*3),2);
                         if($index == 0)
                         {
                             $index = 0.01;
