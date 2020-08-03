@@ -1,0 +1,551 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Ocr form</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="../src/example-styles.css">
+    <link rel="stylesheet" type="text/css" href="demo-styles.css">
+    <style>
+        body {
+    padding:0;
+}
+.container { margin: 150px auto; max-width: 960px;}
+<style type="text/css">
+
+.form-actions {
+    margin: 0;
+    background-color: transparent;
+    text-align: center;
+}
+.form-style-6{
+	/* font: 95% Arial, Helvetica, sans-serif; */
+  font-family: 'Roboto', sans-serif;
+	max-width: 800px;
+	margin: 10px auto;
+	padding: 16px;
+	background: #F7F7F7;
+}
+.form-style-6 h1{
+	background: #0048b0;
+	padding: 20px 0;
+	font-size: 140%;
+	font-weight: 300;
+	text-align: center;
+	color: #fff;
+	margin: -16px -16px 16px -16px;
+}
+.form-style-6 h2{
+	background: #fff;
+	padding: 20px 0;
+	font-size: 120%;
+	font-weight: 100;
+	text-align: center;
+	color: #000000;
+	margin: -16px -16px 16px -16px;
+}
+.form-style-6 input[type="text"],
+.form-style-6 input[type="date"],
+.form-style-6 input[type="datetime"],
+.form-style-6 input[type="email"],
+.form-style-6 input[type="number"],
+.form-style-6 input[type="search"],
+.form-style-6 input[type="time"],
+.form-style-6 input[type="url"],
+.form-style-6 textarea,
+.form-style-6 select
+{
+	-webkit-transition: all 0.30s ease-in-out;
+	-moz-transition: all 0.30s ease-in-out;
+	-ms-transition: all 0.30s ease-in-out;
+	-o-transition: all 0.30s ease-in-out;
+	outline: none;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	width: 100%;
+	background: #fff;
+	margin-bottom: 4%;
+	border: 1px solid #ccc;
+	padding: 3%;
+	color: #555;
+	font: 95% Arial, Helvetica, sans-serif;
+}
+.form-style-6 input[type="text"]:focus,
+.form-style-6 input[type="date"]:focus,
+.form-style-6 input[type="datetime"]:focus,
+.form-style-6 input[type="email"]:focus,
+.form-style-6 input[type="number"]:focus,
+.form-style-6 input[type="search"]:focus,
+.form-style-6 input[type="time"]:focus,
+.form-style-6 input[type="url"]:focus,
+.form-style-6 textarea:focus,
+.form-style-6 select:focus
+{
+	box-shadow: 0 0 5px #43D1AF;
+	padding: 3%;
+	border: 1px solid #43D1AF;
+}
+
+.form-style-6 input[type="submit"],
+.form-style-6 input[type="button"]{
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	width: 100%;
+	padding: 3%;
+	background: #43D1AF;
+	border-bottom: 2px solid #30C29E;
+	border-top-style: none;
+	border-right-style: none;
+	border-left-style: none;
+	color: #fff;
+}
+.form-style-6 input[type="submit"]:hover,
+.form-style-6 input[type="button"]:hover{
+	background: #2EBC99;
+}
+</style>
+    </style>
+<script>
+    function bill()
+    {
+        $.ajax({
+                   url:"../../php/Bill_Connect.php",
+                   method: "POST", 
+			       data: $('#bill').serialize(),
+			       async: false,
+                   success:function()
+                    {
+                        alert("Bill Upload");
+                    }
+                });
+    }
+    function billcon()
+    {
+        var count=1;
+                $.ajax({
+                    url: "../../php/Bill_Connect.php",
+                    method: "POST",
+                    data: {count:count},
+                    async: false,
+                    success: function () {
+                        alert("Upload");
+                    }
+                });
+    }
+</script>
+
+</head>
+<body>
+    <div class="container form-style-6">
+<h1>Bill Connect : Photo </h1>
+
+<form id="bill" class="demo-example">
+
+    <div style="width: 100%; overflow: hidden;">
+
+    
+    <label for="vehicle_type">Vehicle Type:</label>
+    <select id="vehicle_type" name="vehicle_type" multiple>
+
+        <optgroup label="vehicle_type">
+            <option value="car">Car</option>
+            <option value="bike">Bike</option>
+            <option value="truck">Truck</option>
+        </optgroup>
+    </select>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+    
+
+    <label for="brand">Brand:</label>
+    <select id="brand" name="brand" multiple>
+
+        <optgroup label="brand">
+            <option value="honda">Honda</option>
+            <option value="toyota">Toyota</option>
+        </optgroup>
+    </select>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+
+    <label for="model">Model:</label>
+    <select id="model" name="model" multiple>
+
+        <optgroup label="model">
+            <option value="amaze">Amaze</option>
+            <option value="jazz">Jazz</option>
+            <option value="city">City</option>
+            <option value="fortuner">Fortuner</option>
+        </optgroup>
+    </select><br><br>
+
+    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<label for="engine_type">Engine:</label>
+    <select id="engine_type" name="engine_type" multiple>
+
+        <optgroup label="engine_type">
+            <option value="petrol">Petrol</option>
+            <option value="diesel">Diesel</option>
+        </optgroup>
+    </select>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+
+
+    <label for="year">Year</label>
+    <select id="year" name="year" multiple>
+        <optgroup label="year">
+            <option value="2016">2016</option>
+            <option value="2017">2017</option>
+        </optgroup>
+    </select>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<br><br>
+
+    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<label for="region">Region:</label>
+    <select id="region" name="region" multiple>
+        <optgroup label="region">
+            <option value="chennai">Chennai</option>
+            <option value="mumbai">Mumbai</option>
+            <option value="hyderabad">Hyderabad</option>
+        </optgroup>
+    </select>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+
+    <label for="mileage_range">Mileage Range</label>
+    <select id="mileage_range" name="mileage_range" multiple>
+        <optgroup label="mileage_range">
+            <option value="10000">1-10,000</option>
+            <option value="20000">10,000-20,000</option>
+            <option value="30000">20,000-30,000</option>
+            <option value="40000">30,000-40,000</option>
+            <option value="50000">40,000-50,000</option>
+            <option value="60000">50,000-60,000</option>
+            <option value="70000">60,000-70,000</option>
+            <option value="80000">70,000-80,000</option>
+            <option value="90000">80,000-90,000</option>
+            <option value="100000">90,000-1,00,000</option>
+        </optgroup>
+    </select><br><br>
+
+
+
+    <label for="cost">Cost:</label><br>
+    <input type="text" id="cost" name="cost"><br>
+
+    </div>
+</form>
+
+
+<p hidden>
+    Subscription key:
+    <input type="text" name="subscriptionKey" id="subscriptionKey" value="de8335cbef5a4106a846db75089c877d" />
+    Endpoint URL:
+    <input type="text" name="endpointUrl" id="endpointUrl" value="https://pranav01.cognitiveservices.azure.com/" />
+    <br><br>
+    Image to read:
+    <input type="text" name="inputImage" id="inputImage"
+        value="https://www.team-bhp.com/forum/attachments/test-drives-initial-ownership-reports/1590304d1483196917-review-1st-gen-honda-amaze-2013-invoice21331.jpg" />
+</p>
+<input type="file" name="inputImage1" id="inputImage1"
+    value="https://www.team-bhp.com/forum/attachments/test-drives-initial-ownership-reports/1590304d1483196917-review-1st-gen-honda-amaze-2013-invoice21331.jpg" />
+<!--<button onclick=bill()>Read image</button>--><br><br>
+<button type="button" class="btn btn-outline-info" onclick=billcon()>Submit</button>
+<br><br><br><br> 
+
+
+<h1>Bill Connect : Form </h1>
+
+
+
+
+    <form id="billcon" class="demo-example">
+    
+        <div style="width: 100%; overflow: hidden;">
+    
+    
+            <label for="vehicle_type1">Vehicle Type:</label>
+            <select id="vehicle_type1" name="vehicle_type1" multiple>
+    
+                <optgroup label="vehicle_type1">
+                    <option value="car">Car</option>
+                    <option value="bike">Bike</option>
+                    <option value="truck">Truck</option>
+                </optgroup>
+            </select>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+    
+    
+            <label for="brand1">Brand:</label>
+            <select id="brand1" name="brand1" multiple>
+    
+                <optgroup label="brand1">
+                    <option value="honda">Honda</option>
+                    <option value="toyota">Toyota</option>
+                </optgroup>
+            </select>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+    
+            <label for="model1">Model:</label>
+            <select id="model1" name="model1" multiple>
+    
+                <optgroup label="model1">
+                    <option value="amaze">Amaze</option>
+                    <option value="jazz">Jazz</option>
+                    <option value="city">City</option>
+                    <option value="fortuner">Fortuner</option>
+                </optgroup>
+            </select><br><br>
+    
+            &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<label for="engine_type">Engine:</label>
+            <select id="engine_type1" name="engine_type1" multiple>
+    
+                <optgroup label="engine_type1">
+                    <option value="petrol">Petrol</option>
+                    <option value="diesel">Diesel</option>
+                </optgroup>
+            </select>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+    
+    
+            <label for="year1">Year</label>
+            <select id="year1" name="year1" multiple>
+                <optgroup label="year1">
+                    <option value="2016">2016</option>
+                    <option value="2017">2017</option>
+                </optgroup>
+            </select>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<br><br>
+    
+            &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<label for="region">Region:</label>
+            <select id="region1" name="region1" multiple>
+                <optgroup label="region1">
+                    <option value="chennai">Chennai</option>
+                    <option value="mumbai">Mumbai</option>
+                    <option value="hyderabad">Hyderabad</option>
+                </optgroup>
+            </select>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+    
+            <label for="mileage_range1">Mileage Range</label>
+            <select id="mileage_range1" name="mileage_range1" multiple>
+                <optgroup label="mileage_range1">
+                    <option value="10000">1-10,000</option>
+                    <option value="20000">10,000-20,000</option>
+                    <option value="30000">20,000-30,000</option>
+                    <option value="40000">30,000-40,000</option>
+                    <option value="50000">40,000-50,000</option>
+                    <option value="60000">50,000-60,000</option>
+                    <option value="70000">60,000-70,000</option>
+                    <option value="80000">70,000-80,000</option>
+                    <option value="90000">80,000-90,000</option>
+                    <option value="100000">90,000-1,00,000</option>
+                </optgroup>
+            </select><br><br>
+
+    
+
+            <label for="cost">Cost:</label><br>
+            <input type="text" id="cost" name="cost"><br>
+
+          <label for="modal-example">Select all the services you have received.</label>
+          <select id="modal-example" name="inventors" multiple>
+              <option value="oil_filter">Oil Filter</option>
+              <option value="engine_oil">Engine Oil</option>
+              <option value="washer_plug_drain">Washer Plug Drain</option>
+            <option value="dust_and_pollen_filter">Dust and Pollen filter</option>
+              <option value="whell_alignment_and_balancing">Wheel Alignment and Balancing</option>
+              <option value="air_clean_filter">Air Clean Filter</option>
+              <option value="fuel_filter">Fuel Filter</option>
+              <option value="spark_plug">Spark Plug</option>
+              <option value="brake_fluid">Brake Fluid</option>
+              <option value="brake_and_clutch_oil">Brake and Clutch Oil </option>
+             <option value="transmission_fluid">Transmission Fluid</option>
+                <option value="brake_pads">Brake Pads</option>
+                <option value="clutch">Clutch</option>
+                <option value="coolant">Coolant</option>
+
+          </select>
+          <br><br><br><br>
+
+        
+          <button type="button" class="btn btn-outline-info" onclick=bill()>Submit</button>
+        
+
+      </form> 
+  </div>
+</div>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="../src/jquery.multi-select.js"></script>
+    <script type="text/javascript">
+    $(function(){
+        $('#vehicle_type').multiSelect();
+        $('#brand').multiSelect();
+        $('#model').multiSelect();
+        $('#engine_type').multiSelect();
+        $('#year').multiSelect();
+        $('#region').multiSelect();
+        $('#mileage_range').multiSelect();
+        $('#vehicle_type1').multiSelect();
+        $('#brand1').multiSelect();
+        $('#model1').multiSelect();
+        $('#engine_type1').multiSelect();
+        $('#year1').multiSelect();
+        $('#region1').multiSelect();
+        $('#mileage_range1').multiSelect();
+        $('#line-wrap-example').multiSelect({
+            positionMenuWithin: $('.position-menu-within')
+        });
+        $('#categories').multiSelect({
+            noneText: 'All categories',
+            presets: [
+                {
+                    name: 'All categories',
+                    options: []
+                },
+                {
+                    name: 'My categories',
+                    options: ['a', 'c']
+                }
+            ]
+        });
+        $('#modal-example').multiSelect({
+            'modalHTML': '<div class="multi-select-modal">'
+        });
+    });
+    </script>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-36251023-1']);
+  _gaq.push(['_setDomainName', 'jqueryscript.net']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+<script>
+try {
+  fetch(new Request("https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js", { method: 'HEAD', mode: 'no-cors' })).then(function(response) {
+    return true;
+  }).catch(function(e) {
+    var carbonScript = document.createElement("script");
+    carbonScript.src = "//cdn.carbonads.com/carbon.js?serve=CK7DKKQU&placement=wwwjqueryscriptnet";
+    carbonScript.id = "_carbonads_js";
+    document.getElementById("carbon-block").appendChild(carbonScript);
+  });
+} catch (error) {
+  console.log(error);
+}
+</script>
+
+<script type="text/javascript">
+    function processImage() {
+        // **********************************************
+        // *** Update or verify the following values. ***
+        // **********************************************
+
+        var subscriptionKey = document.getElementById("subscriptionKey").value;
+        var endpoint = document.getElementById("endpointUrl").value;
+
+        var uriBase = endpoint + "vision/v3.0/ocr";
+
+        // Request parameters.
+        var params = {
+            "language": "unk",
+            "detectOrientation": "true",
+        };
+
+        // Display the image.
+        var sourceImageUrl = document.getElementById("inputImage").value;
+        document.querySelector("#sourceImage").src = sourceImageUrl;
+
+        // Perform the REST API call.
+        $.ajax({
+            url: uriBase + "?" + $.param(params),
+
+            // Request headers.
+            beforeSend: function (jqXHR) {
+                jqXHR.setRequestHeader("Content-Type", "application/json");
+                jqXHR.setRequestHeader("Ocp-Apim-Subscription-Key", subscriptionKey);
+            },
+
+            type: "POST",
+
+            // Request body.
+            data: '{"url": ' + '"' + sourceImageUrl + '"}',
+        })
+
+            .done(function (data) {
+                // Show formatted JSON on webpage.
+                $("#responseTextArea").val(JSON.stringify(data, null, 2));
+                var a = (data.regions);
+                // console.log(a);
+                var value = [];
+                var b = ["bonnet", "door", "front bumper", "rear bumper", "front headlight", " back headlight", "side mirror", "tail light", "clutch plate", "Brake pads", " front windsheild", "rear windshield", " ac evaporator coil ", "radiator", " battery"];
+                value.length = b.length;
+                //var  b = ["Replace engine oil WASHER PLUG DRAIN 14 bonnet door front bumper rear bumper front headlight back headlight side mirror tail light clutch plate brake pad front windsheild rear windshield  ac evaporator coil radiator  battery"];
+                var str1 = [];
+                var str = [];
+                var str2 = [];
+                var str3 = [];
+                var str4 = [];
+
+
+                for (var i = 0; i < a.length; i++) {
+                    str = (a[i].lines);
+                    for (var j = 0; j < str.length; j++) {
+                        str1 = (str[j].words);
+                        for (var k = 0; k < str1.length; k++) {
+                            str2 = str2 + (str1[k].text) + " ";
+                            if (k == (str1.length - 1)) {
+                                str3.push(str2);
+                                str2 = "";
+                            }
+
+
+                        }
+
+                    }
+                }
+                var v;
+                for (var s = 0; s < b.length; s++) {
+                    for (var m = 0; m < str3.length; m++) {
+                        if (str3[m].includes(b[s])) {
+                            str4.push(str3[m]);
+                            v = 1;
+                        }
+
+                    }
+                    value[s] = v;
+                    v = 0;
+
+                }
+
+                var amount = str3[188];
+                str4.push(amount);
+                console.log(str4);
+                console.log(value);
+
+
+
+
+            })
+
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                // Display error message.
+                var errorString = (errorThrown === "") ?
+                    "Error. " : errorThrown + " (" + jqXHR.status + "): ";
+                errorString += (jqXHR.responseText === "") ? "" :
+                    (jQuery.parseJSON(jqXHR.responseText).message) ?
+                        jQuery.parseJSON(jqXHR.responseText).message :
+                        jQuery.parseJSON(jqXHR.responseText).error.message;
+                alert(errorString);
+            });
+
+    };
+
+
+
+
+</script>
+
+</body>
+</html>

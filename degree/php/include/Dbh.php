@@ -4,7 +4,7 @@
     private $servername = "localhost";
     private $username = "root";
     private $password = "";
-    private $dbname = "degree";
+    private $dbname = "ea";
 	protected $conn;
 	protected function Connect()
 	{

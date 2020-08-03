@@ -18,7 +18,7 @@ class Index_generation extends Dbh
                 }
                 if($this->max >= $total)
                 {
-                    $index = round((($total/$this->max)*3),2);
+                    $index = round((($total/$this->max)*2),2);
                     if($index == 0)
                     {
                         $index = 0.01;
@@ -37,7 +37,7 @@ class Index_generation extends Dbh
                         $model = $row['model'];
                         $engine_type = $row['engine_type'];
                         $total_general = $row['total_general'];
-                        $index = round((($total_general/$this->max)*3),2);
+                        $index = round((($total_general/$this->max)*2),2);
                         if($index == 0)
                         {
                             $index = 0.01;
@@ -46,7 +46,7 @@ class Index_generation extends Dbh
                         $query->bind_param("sss", $index, $model, $engine_type);
                         $query->execute();
                     }
-                    $index = round((($total/$this->max)*3),2);
+                    $index = round((($total/$this->max)*2),2);
                     if($index == 0)
                     {
                         $index = 0.01;
@@ -59,7 +59,7 @@ class Index_generation extends Dbh
             }
             else
             {
-                $index = round((($total/$total)*3),2);
+                $index = round((($total/$total)*2),2);
                 if($index == 0)
                 {
                     $index = 0.01;
@@ -90,7 +90,7 @@ class Index_generation extends Dbh
                     }
                     if($this->max > $total)
                     {
-                        $index = round((($total/$this->max)*3),2);
+                        $index = round((($total/$this->max)*2),2);
                         if($index == 0)
                         {
                             $index = 0.01;
@@ -127,7 +127,7 @@ class Index_generation extends Dbh
                 $model = $row['model'];
                 $engine = $row['engine_type'];
                 $total = $row['total_general'];
-                $index = round((($total/$this->max)*3),2);
+                $index = round((($total/$this->max)*2),2);
                 if($index == 0)
                 {
                     $index = 0.01;
@@ -419,7 +419,7 @@ class Index_generation extends Dbh
         }
         $this->closeConnect();
     }
-    public function service($vehicle_type, $brand, $model,$engine_type,$mileage,$part1,$part2,$part3,$part4,$part5,$part6,$part7,$part8,$part9,$part10,$part11,$part12,$part13,$part14,$total)
+    public function service($vehicle_type, $brand, $model,$engine_type,$make_year,$region,$mileage_range,$mileage,$part1,$part2,$part3,$part4,$part5,$part6,$part7,$part8,$part9,$part10,$part11,$part12,$part13,$part14,$total)
     {
         $from = (floor(round(($mileage/$this->range),1)) * $this->range) + 1;
         $to = ($from - 1) + $this->range;
@@ -438,8 +438,8 @@ class Index_generation extends Dbh
                 {
                     $index = 0.01;
                 }
-                $query1 = $db->prepare("INSERT INTO service_details(vehicle_type, brand, model, engine_type, mileage, oil_filter, engine_oil, washer_plug_drain, dust_and_pollen_filter, whell_alignment_and_balancing, air_clean_filter, fuel_filter, spark_plug, brake_fluid, brake_and_clutch_oil, transmission_fluid, brake_pads, clutch, coolant, cost, index_service) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
-                $query1->bind_param("sssssssssssssssssssss", $vehicle_type, $brand, $model, $engine_type, $mileage, $part1, $part2, $part3, $part4, $part5, $part6, $part7, $part8, $part9, $part10, $part11, $part12, $part13, $part14, $total, $index);
+                $query1 = $db->prepare("INSERT INTO service_details(vehicle_type, brand, model, engine_type, make_year, region, mileage_range, mileage, oil_filter, engine_oil, washer_plug_drain, dust_and_pollen_filter, whell_alignment_and_balancing, air_clean_filter, fuel_filter, spark_plug, brake_fluid, brake_and_clutch_oil, transmission_fluid, brake_pads, clutch, coolant, cost, index_service) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
+                $query1->bind_param("ssssssssssssssssssssssss", $vehicle_type, $brand, $model, $engine_type, $make_year, $region, $mileage_range, $mileage, $part1, $part2, $part3, $part4, $part5, $part6, $part7, $part8, $part9, $part10, $part11, $part12, $part13, $part14, $total, $index);
                 $query1->execute();
                 $this->closeConnect();
             }
@@ -465,8 +465,8 @@ class Index_generation extends Dbh
                 {
                     $index = 0.01;
                 }
-                $query1 = $db->prepare("INSERT INTO service_details(vehicle_type, brand, model, engine_type, mileage, oil_filter, engine_oil, washer_plug_drain, dust_and_pollen_filter, whell_alignment_and_balancing, air_clean_filter, fuel_filter, spark_plug, brake_fluid, brake_and_clutch_oil, transmission_fluid, brake_pads, clutch, coolant, cost, index_service) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
-                $query1->bind_param("sssssssssssssssssssss", $vehicle_type, $brand, $model, $engine_type, $mileage, $part1, $part2, $part3, $part4, $part5, $part6, $part7, $part8, $part9, $part10, $part11, $part12, $part13, $part14, $total, $index);
+                $query1 = $db->prepare("INSERT INTO service_details(vehicle_type, brand, model, engine_type, make_year, region, mileage_range, mileage, oil_filter, engine_oil, washer_plug_drain, dust_and_pollen_filter, whell_alignment_and_balancing, air_clean_filter, fuel_filter, spark_plug, brake_fluid, brake_and_clutch_oil, transmission_fluid, brake_pads, clutch, coolant, cost, index_service) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
+                $query1->bind_param("sssssssssssssssssssssssss", $vehicle_type, $brand, $model, $engine_type, $make_year, $region, $mileage_range, $mileage, $part1, $part2, $part3, $part4, $part5, $part6, $part7, $part8, $part9, $part10, $part11, $part12, $part13, $part14, $total, $index);
                 $query1->execute();
                 $this->closeConnect();
             }
@@ -478,8 +478,8 @@ class Index_generation extends Dbh
             {
                 $index = 0.01;
             }
-            $query1 = $db->prepare("INSERT INTO service_details(vehicle_type, brand, model, engine_type, mileage, oil_filter, engine_oil, washer_plug_drain, dust_and_pollen_filter, whell_alignment_and_balancing, air_clean_filter, fuel_filter, spark_plug, brake_fluid, brake_and_clutch_oil, transmission_fluid, brake_pads, clutch, coolant, cost, index_service) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
-            $query1->bind_param("sssssssssssssssssssss", $vehicle_type, $brand, $model, $engine_type, $mileage, $part1, $part2, $part3, $part4, $part5, $part6, $part7, $part8, $part9, $part10, $part11, $part12, $part13, $part14, $total, $index);
+            $query1 = $db->prepare("INSERT INTO service_details(vehicle_type, brand, model, engine_type, make_year, region, mileage_range, mileage, oil_filter, engine_oil, washer_plug_drain, dust_and_pollen_filter, whell_alignment_and_balancing, air_clean_filter, fuel_filter, spark_plug, brake_fluid, brake_and_clutch_oil, transmission_fluid, brake_pads, clutch, coolant, cost, index_service) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
+            $query1->bind_param("sssssssssssssssssssssss", $vehicle_type, $brand, $model, $engine_type, $make_year, $region, $mileage_range, $mileage, $part1, $part2, $part3, $part4, $part5, $part6, $part7, $part8, $part9, $part10, $part11, $part12, $part13, $part14, $total, $index);
             $query1->execute();
             $this->closeConnect();
         }
@@ -522,6 +522,30 @@ class Index_generation extends Dbh
                 }
                 $from +=$this->range;
                 $to +=$this->range;
+            }
+        }
+        $this->closeConnect();
+    }
+    public function pollution_init()
+    {
+        $bar_hsu = 65;
+        $bar_co = 0.5;
+        $bar_hc = 750;
+        $total_bar = $bar_hsu + $bar_co + $bar_hc + 0.5;
+        $db = $this->Connect();
+        $result = $db->query("SELECT slno,total FROM pollution");
+        if($result->num_rows > 0)
+        {
+            while($row = $result->fetch_assoc())
+            {
+                $slno = $row['slno'];
+                $total = $row['total'];
+                $index = round(($total/$total_bar),2);
+                if($index >= 1)
+                {
+                    $index = 1;
+                }
+                $res = $db->query("UPDATE pollution SET index_pollution = '$index' WHERE slno = '$slno';");
             }
         }
         $this->closeConnect();

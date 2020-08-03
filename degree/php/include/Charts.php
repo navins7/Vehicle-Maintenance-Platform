@@ -1,7 +1,7 @@
 <?php
 class Charts extends Dbh
 {
-    private function Overall_index($model, $engine_type)
+    private function Overall_index($model, $engine_type, $count)
     {
         $general=0;$labour=0;$accidental=0;$insurance=0;$service=0;
         $db = $this->Connect();
@@ -55,20 +55,40 @@ class Charts extends Dbh
                 }
             }
         }
+        $result3 = $db->query("SELECT AVG(index_pollution) as index2 FROM pollution WHERE model = '$model' AND engine_type = '$engine_type';");
+        if($result3->num_rows > 0)
+        {
+            while($row = $result3->fetch_assoc())
+            {
+                $pollution = round($row['index2'],1);
+                if($pollution==0)
+                {
+                    $pollution=0.1;
+                }
+            }
+        }
         $this->closeConnect();
-        $overall = round(($general + $labour + $insurance + $accidental + $service),1);
-        $index[] = array('Name' => "TOTAL", 'Index' => floatval($overall));
-        $index[] = array('Name' => "General", 'Index' => floatval($general));
-        $index[] = array('Name' => "Service", 'Index' => floatval($service));
-        $index[] = array('Name' => "Accidental", 'Index' => floatval($accidental));
-        $index[] = array('Name' => "Insurance", 'Index' => floatval($insurance));
-        $index[] = array('Name' => "Labour", 'Index' => floatval($labour));
-        return $index;
+        $overall = round(($general + $labour + $insurance + $accidental + $service +$pollution),1);
+        if($count == 1)
+        {
+            $index[] = array('Name' => "TOTAL", 'Index' => floatval($overall));
+            return $index;
+        }
+        else
+        {
+            $index[] = array('Name' => "General", 'Index' => floatval($general));
+            $index[] = array('Name' => "Service", 'Index' => floatval($service));
+            $index[] = array('Name' => "Accidental", 'Index' => floatval($accidental));
+            $index[] = array('Name' => "Insurance", 'Index' => floatval($insurance));
+            $index[] = array('Name' => "Labour", 'Index' => floatval($labour));
+            $index[] = array('Name' => "Pollution", 'Index' => floatval($pollution));
+            return $index;
+        }
     }
-    public function index_to_chart($model,$engine_type)
+    public function index_to_chart($model,$engine_type, $count)
     {
         $output[] = array();
-        $output = $this->Overall_index($model, $engine_type);
+        $output = $this->Overall_index($model, $engine_type, $count);
         return $output;
     }
 }

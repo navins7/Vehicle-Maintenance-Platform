@@ -6,8 +6,7 @@ class Prediction extends Dbh
     public function Faults_Prediction($model, $engine_type, $region, $make_year, $to)
     {
         $table = $this->Connect();
-        $result1 = $table->query("SELECT COUNT(*) as total FROM service_details WHERE model ='$model' AND region ='$region' AND make_year='$make_year' AND engine_type ='$engine_type' AND mileage_range='$to'");
-        var_dump($result1);
+        $result1 = $table->query("SELECT COUNT(*) as total FROM service_details WHERE model ='$model' AND engine_type='$engine_type' AND region ='$region' AND make_year='$make_year' AND mileage_range='$to';");
         if($result1->num_rows > 0)
         {
             while($row = $result1->fetch_assoc())
@@ -21,26 +20,29 @@ class Prediction extends Dbh
                 {
                     $this->last_count = $row['last_count'];
                 }
-                if(($this->count - $this->last_count) == 100)
+                if(($this->count - $this->last_count) >= 1)
                 {
-                    $this->predict_update($db,$model,$engine_type,$region,$make_year,$to,$this->count);
-                    $this->predict_display($db,$model,$engine_type,$region,$make_year,$to);
+                    $this->predict_update($table,$model,$engine_type,$region,$make_year,$to,$this->count);
+                    $data = $this->predict_display($table,$model,$engine_type,$region,$make_year,$to);
+                    return $data;
                 }
                 else
                 {
-                    $this->predict_display($db,$model,$engine_type,$region,$make_year,$to);
+                    $data = $this->predict_display($table,$model,$engine_type,$region,$make_year,$to);
+                    return $data;
                 }
-                $this->closeConnect();
             }
         }
         else
         {
-            echo "no such records available";
+            return "no such records available";
         }
+        $this->closeConnect();
+
     }
     private function predict_update($db,$model,$engine_type,$region,$make_year,$to,$count1)
     {
-        $result = $db->query("SELECT oil_filter, engine_oil, washer_plug_drain, dust_and_pollen_filter, whell_alignment_and_balancing, air_clean_filter, fuel_filter, spark_plug, brake_fluid, brake_and_clutch_oil, transmission_fluid, brake_pads, clutch, coolant FROM service_details WHERE service_details LIMIT 1;");
+        $result = $db->query("SELECT oil_filter, engine_oil, washer_plug_drain, dust_and_pollen_filter, whell_alignment_and_balancing, air_clean_filter, fuel_filter, spark_plug, brake_fluid, brake_and_clutch_oil, transmission_fluid, brake_pads, clutch, coolant FROM service_details LIMIT 1;");
         if($result->num_rows > 0)
         {
             $part = $result->fetch_fields();
@@ -53,28 +55,39 @@ class Prediction extends Dbh
     private function predict_update_part($db,$model,$engine_type, $region,$make_year,$part,$to,$count1)
     {
         $percent=0;
-        $result = $db->query("SELECT COUNT(".$part.") as percent FROM service_details WHERE model='$model' AND region ='$region' AND make_year='$make_year' AND mileage_range='$to' GROUP BY ".$part." HAVING ".$part."!=0;");
+        $result = $db->query("SELECT COUNT(".$part.") as percent FROM service_details WHERE model='$model' AND region ='$region' AND make_year='$make_year' AND mileage_range='$to' GROUP BY ".$part." HAVING ".$part."=1;");
         if($result->num_rows > 0)
         {
              while($row = $result->fetch_assoc())
              {
-                 $percent = round((($row['percent']/$count1)*100),2);
+                 $percent = round(($row['percent']/$count1),2)*100;
              }
-             $res = $db->query("UPDATE prediction SET ".$part."=".$percent.",last_count='$count1' WHERE model='$model' AND engine_type='$engine_type' AND region='$region' AND make_year='$make_year' AND mileage_range='$to';");
+             $res = $db->query("UPDATE prediction SET ".$part."='$percent',last_count='$count1' WHERE model='$model' AND engine_type='$engine_type' AND region='$region' AND make_year='$make_year' AND mileage_range='$to';");
         }
     }
-    public function predict_display($model,$engine_type,$region,$make_year,$to)
+    public function predict_display($db,$model,$engine_type,$region,$make_year,$to)
     {
-        $db = $this->Connect();
         $result = $db->query("SELECT oil_filter, engine_oil, washer_plug_drain, dust_and_pollen_filter, whell_alignment_and_balancing, air_clean_filter, fuel_filter, spark_plug, brake_fluid, brake_and_clutch_oil, transmission_fluid, brake_pads, clutch, coolant FROM prediction WHERE model='$model' AND engine_type='$engine_type' AND region='$region' AND make_year='$make_year' AND mileage_range='$to';");
         if($result->num_rows > 0)
         {
-            while($row = $result->fetch_assoc())
+            $output= array();
+            $i = 0;
+            $parts = $result->fetch_fields();
+            $col = $result->fetch_array();
+            foreach($parts as $val)
             {
-                return json_encode($row);
+                if($col[$i]==null)
+                {
+                    $i +=1;
+                }
+                else
+                {
+                    $output[] = array('Name' => $val->name, 'Index' => floatval($col[$i]));
+                    $i +=1;
+                }
             }
+            return $output;
         }
-        $this->closeConnect();
     }
     public function predict_init()
     {
@@ -123,10 +136,8 @@ class Prediction extends Dbh
                  while($row = $result1->fetch_assoc())
                  {
                      $percent = round(($row['percent']/$count1),4)*100;
-                     echo $percent;
-                     echo "\n";
                  }
-                 $res = $db->query("UPDATE prediction SET ".$part."=".$percent.",last_count='$count1' WHERE model='$model' AND engine_type='$engine_type' AND region='$region' AND make_year='$make_year' AND mileage_range='$to';");
+                 $res = $db->query("UPDATE prediction SET ".$part."='$percent',last_count='$count1' WHERE model='$model' AND engine_type='$engine_type' AND region='$region' AND make_year='$make_year' AND mileage_range='$to';");
             }
         }
         else
@@ -137,7 +148,6 @@ class Prediction extends Dbh
                  while($row = $result1->fetch_assoc())
                  {
                      $percent = round(($row['percent']/$count1),4)*100;
-                     echo $percent;
                  }
                  $res = $db->prepare("INSERT INTO prediction(vehicle_type,brand,model,engine_type,make_year,region,mileage_range,last_count,".$part.") VALUES(?,?,?,?,?,?,?,?,?);");
                  $res->bind_param("sssssssss", $vehicle_type,$brand,$model,$engine_type,$make_year,$region,$to,$count1,$percent);
@@ -163,12 +173,4 @@ class Prediction extends Dbh
         $this->closeConnect();
     }
 }
-
-
-
-//SELECT COUNT(`fuel_filter`),`fuel_filter` FROM `service_details` WHERE `model`='amaze' AND location ='chennai' AND `mileage` BETWEEN 10001 AND 20000 GROUP BY `fuel_filter`;
-
-//SELECT COUNT(`fuel_filter`),`fuel_filter` FROM `service_details` WHERE `model`='amaze' AND `mileage` BETWEEN 10001 AND 20000 GROUP BY `fuel_filter` HAVING `fuel_filter`!=0
-//SELECT COUNT(*) as total,`mileage_range` FROM service_details WHERE `model`='amaze' AND `engine_type`='petrol' AND `make_year`=2016 AND `region`='chennai' GROUP BY mileage_range
-//SELECT COUNT(*) as total,`model`,`engine_type`,`make_year`,`region`,`mileage_range` FROM service_details WHERE `model`='amaze' AND `engine_type`='petrol' AND `make_year`=2017 AND `region`='chennai' GROUP BY mileage_range
 ?>

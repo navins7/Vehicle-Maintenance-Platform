@@ -1,0 +1,443 @@
+<!DOCTYPE html>  
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Vehicle Degree° &mdash; The Maintenence Index</title>
+    <meta name="description" content="Free Bootstrap Theme by uicookies.com">
+    <meta name="keywords" content="free website templates, free bootstrap themes, free template, free bootstrap, free website template">
+    
+    <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:400,500,700"> -->
+    <link rel="stylesheet" href="css/styles-merged.css">
+    <link rel="stylesheet" href="css/style.min.css">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', { 'packages': ['bar'] });
+        google.charts.setOnLoadCallback();
+
+        function drawChart() {
+          var data = new google.visualization.DataTable();
+          var model = $('#model').val();
+          var variant = $('#variant').val();
+          var make_year = $('#make_year').val();
+          var region = $('#region').val();
+          var range = $('#range').val();
+          $.ajax({
+            url: "php/Chart_generation.php",
+            method: "POST",
+            data: { model: model, variant: variant, make_year: make_year, region: region, range: range },
+            dataType: "JSON",
+            async: false,
+            success: function (result) {
+              if (result == 0) {
+                alert("Not Available");
+              }
+              else {
+                data.addColumn('string', 'Parts');
+                data.addColumn('number', '% of Faults');
+                $.each(result, function (i, result) {
+                  var Model = result.Name;
+                  var Index = parseFloat($.trim(result.Index));
+                  data.addRows([[Model, Index]]);
+                });
+              }
+            }
+          });
+          var options = {
+            title: 'FAULTS PREDICTION',
+            width: 900,
+            legend: { position: 'none' },
+            chart: {
+              title: 'Faults Prediction',
+              subtitle: 'Faults by percentage'
+            },
+            bars: 'horizontal',
+            axes: {
+              x: {
+                0: { side: 'top', label: 'Percentage' }
+              }
+            },
+            bar: { groupWidth: "90%" }
+          };
+          var chart = new google.charts.Bar(document.getElementById('chart_div'));
+          chart.draw(data, options);
+        }
+      </script>
+
+    <!--[if lt IE 9]>
+      <script src="js/vendor/html5shiv.min.js"></script>
+      <script src="js/vendor/respond.min.js"></script>
+    <![endif]-->
+
+      
+
+  </head>
+  <body>
+    
+    <!-- Fixed navbar -->
+    <!-- navbar-fixed-top  -->
+    
+    <nav class="navbar probootstrap-megamenu navbar-default probootstrap-navbar">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="index.html" title="Vehicle Degree">Degree°</a>
+        </div>
+
+        <div id="navbar-collapse" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+           
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="pricing.html">Degree°</a></li>
+            <li><a href="fault.html">Fault prediction</a></li>
+            <li><a href="01_Home.html">Book Service</a></li>
+            <li class="probootstra-cta-button"><a href="#" class="btn" data-toggle="modal" data-target="#loginModal">Log in</a></li>
+           <li class="probootstra-cta-button last"><a href="#" class="btn btn-ghost" data-toggle="modal" data-target="#signupModal">Sign up</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+     <!-- Modal login -->
+     <div class="modal fadeInUp probootstrap-animated" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+      <div class="vertical-alignment-helper">
+        <div class="modal-dialog modal-md vertical-align-center">
+          <div class="modal-content">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-cross"></i></button>
+            <div class="probootstrap-modal-flex">
+              <div class="probootstrap-modal-figure" style="background-image: url(img/modal_bg.jpg);"></div>
+              <div class="probootstrap-modal-content">
+                <form action="#" class="probootstrap-form">
+                  <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Email">
+                  </div> 
+                  <div class="form-group">
+                    <input type="password" class="form-control" placeholder="Password">
+                  </div> 
+                  <div class="form-group clearfix mb40">
+                    <label for="remember" class="probootstrap-remember"><input type="checkbox" id="remember"> Remember Me</label>
+                    <a href="#" class="probootstrap-forgot">Forgot Password?</a>
+                  </div>
+                  <div class="form-group text-left">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <input type="submit" class="btn btn-primary btn-block" value="Sign In">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group probootstrap-or">
+                    <span><em>or</em></span>
+                  </div>
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <button class="btn btn-primary btn-ghost btn-block btn-connect-facebook"><span>connect with</span> Facebook</button>
+                        <button class="btn btn-primary btn-ghost btn-block btn-connect-google"><span>connect with</span> Google</button>
+                        <button class="btn btn-primary btn-ghost btn-block btn-connect-twitter"><span>connect with</span> Twitter</button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END modal login -->
+    
+    <!-- Modal signup -->
+    <div class="modal fadeInUp probootstrap-animated" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="signupModalLabel" aria-hidden="true">
+      <div class="vertical-alignment-helper">
+        <div class="modal-dialog modal-md vertical-align-center">
+          <div class="modal-content">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-cross"></i></button>
+            <div class="probootstrap-modal-flex">
+              <div class="probootstrap-modal-figure" style="background-image: url(img/modal_bg.jpg);"></div>
+              <div class="probootstrap-modal-content">
+                <form action="#" class="probootstrap-form">
+                  <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Email">
+                  </div> 
+                  <div class="form-group">
+                    <input type="password" class="form-control" placeholder="Password">
+                  </div> 
+                  <div class="form-group">
+                    <input type="password" class="form-control" placeholder="Re-type Password">
+                  </div> 
+                  <div class="form-group clearfix mb40">
+                    <label for="remember" class="probootstrap-remember"><input type="checkbox" id="remember"> Remember Me</label>
+                    <a href="#" class="probootstrap-forgot">Forgot Password?</a>
+                  </div>
+                  <div class="form-group text-left">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <input type="submit" class="btn btn-primary btn-block" value="Sign Up">
+                      </div>
+                    </div>
+                    
+                  </div>
+                  <div class="form-group probootstrap-or">
+                    <span><em>or</em></span>
+                  </div>
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <button class="btn btn-primary btn-ghost btn-block btn-connect-facebook"><span>connect with</span> Facebook</button>
+                        <button class="btn btn-primary btn-ghost btn-block btn-connect-google"><span>connect with</span> Google</button>
+                        <button class="btn btn-primary btn-ghost btn-block btn-connect-twitter"><span>connect with</span> Twitter</button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END modal signup --> 
+
+    <section class="probootstrap-hero probootstrap-xs-hero probootstrap-hero-colored">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 probootstrap-hero-text text-center">
+            <h1 class="probootstrap-animate" data-animate-effect="fadeIn">Degree°<br>Fault Prediction</h1>
+            <p class="probootstrap-animate" data-animate-effect="fadeIn"><br><br></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="probootstrap-section probootstrap-bg-white probootstrap-pricing-table">
+      <div class="container">
+        <div class="row probootstrap-gutter0">
+          <div class="col-md-4 probootstrap-pricing-wrap">
+            <div class="probootstrap-pricing probootstrap-animate" data-animate-effect="fadeIn">
+
+              <h3>Honda City Petrol</h3>
+              <div class="probootstrap-price-wrap">
+                <span class="probootstrap-price">4.1</span>
+                <span class="probootstrap-price-per-month">/10</span>
+              </div>
+              
+
+              <p><a href="#" class="btn btn-primary btn-lg">View Info</a></p>
+
+            </div>
+          </div>
+          <div class="col-md-4 probootstrap-pricing-wrap">
+            <div class="probootstrap-pricing popular probootstrap-animate" data-animate-effect="fadeIn">
+
+              <h3>Honda Amaze Petro <span>Most popular</span></h3>
+              
+              <div class="probootstrap-price-wrap">
+                <span class="probootstrap-price">4.2</span>
+                <span class="probootstrap-price-per-month">/10</span>
+              </div>
+             
+
+              <p><a href="#" class="btn btn-primary btn-lg">View Info</a></p>
+
+            </div>
+          </div>
+          <div class="col-md-4 probootstrap-pricing-wrap">
+            <div class="probootstrap-pricing probootstrap-animate" data-animate-effect="fadeIn">
+
+              <h3>Honda Jazz- Diesel</h3>
+              <div class="probootstrap-price-wrap">
+                <span class="probootstrap-price">6</span>
+                <span class="probootstrap-price-per-month">/10</span>
+              </div>
+              
+
+              <p><a href="#" class="btn btn-primary btn-lg">View Info</a></p>
+
+            </div>
+          </div>
+        </div>
+        <!-- END row -->
+      </div>
+    </section>
+
+    <section class="probootstrap-hero probootstrap-xs-hero probootstrap-hero-colored">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 probootstrap-hero-text text-center">
+            <h1 class="probootstrap-animate" data-animate-effect="fadeIn">Fault Prediction<br> Select Model</h1> <br>
+            <form action="#">
+              <div class="user-box">
+                <select id="model" style="font-size:20px;">
+                  <label for="cars">Select Model:</label>
+                  <option value="">Model</option>
+                  <option value="amaze">Amaze</option>
+                  <option value="city">City</option>
+                  <option value="jazz">Jazz</option>
+                </select>
+            
+                <select id="variant" style="font-size:20px;">
+                  <label for="cars">Select Variant:</label>
+                  <option value="">Variant</option>
+                  <option value="petrol">petrol</option>
+                  <option value="diesel">diesel</option>
+                </select>
+                <select id="region" style="font-size:20px;">
+                  <label for="cars">Select Region:</label>
+                  <option value="">Region</option>
+                  <option value="chennai">Chennai</option>
+                  <option value="mumbai">Mumbai</option>
+                </select>
+                <select id="make_year" style="font-size:20px;">
+                  <label for="cars">Select Make Year:</label>
+                  <option value="">MAKE YEAR</option>
+                  <option value="2016">2016</option>
+                  <option value="2017">2017</option>
+                </select>
+                <select id="range" style="font-size:20px;">
+                  <label for="cars">Select Model:</label>
+                  <option value="">Range</option>
+                  <option value="10000">1 - 10000</option>
+                  <option value="20000">10001 - 20000</option>
+                  <option value="30000">20001 - 30000</option>
+                  <option value="40000">30001 - 40000</option>
+                  <option value="50000">40001 - 50000</option>
+                  <option value="60000">50001 - 60000</option>
+                  <option value="70000">60001 - 70000</option>
+                  <option value="80000">70001 - 80000</option>
+                  <option value="90000">80001 - 90000</option>
+                  <option value="100000">90001 - 100000</option>
+                </select>
+              
+              
+                <input  onclick=drawChart() type="button" value="Submit" style="font-size:20px; " /><br><br>
+                <div id="chart_div" class="container" style="width: 900px; height: 500px;"></div><br><br>
+
+              </form>
+        </div>
+      </div>
+    </section>
+
+    
+
+    <section class="probootstrap-section probootstrap-bg-white probootstrap-zindex-above-showcase">
+      <div class="container probootstrap-border-top">
+        <div class="row">
+          <div class="col-md-12 text-left section-heading probootstrap-animate">
+            <h2>How do we Do it ?</h2>
+          </div>
+        </div>
+        <!-- END row -->
+        <div class="col-md-12 text-center section-heading probootstrap-animate">
+          <img src="img/fflow.jpg" style="width:600px;height:450px;">
+    
+        </div>
+        <div class="row">
+          <div class="col-md-6 probootstrap-animate" data-animate-effect="fadeIn">
+            <h3>Would you like to know how sustainable your car is?</h3>
+            <p>We have a maintenance index and its explanation for each car that will help you understand if all your expectations are reached.</p>
+            <h3>Maintenance index.But how?</h3>
+            <p>We finalized few factors that are essential to classify maintenance index of your car and they are as follows: General Service, Accidental, Service and repair (Wear and tear), Insurance and Labour. Considering these factors we created our maintenance index.</p>
+            <h3>What if you are prepared about the possible faults your car <br>might endure?</h3>
+            <p>We have fault prediction to help our people by giving them the necessary information of when they are tend to face which faults and follow "Prevention is better than cure".</p>
+            <h3>Fault Prediction.But how?</h3>
+            <p>Our fault predictor gives which fault occurs when and at what stage, we are predicting using machine learning. The percentage of accuracy as in the chance of the fault occurring.</p>
+            
+          </div>
+          <div class="col-md-6 probootstrap-animate" data-animate-effect="fadeIn">
+            <h3>Why is Car Maintenance Important?</h3>
+            <p>Keeping your car in good running will make it last longer and reduce the chance you’ll breakdown. Sure, it costs money, but in the long run, it’s totally worth it. Take changing your oil for example. Over time it stops doing it’s job lubricating all the parts in your engine and starts sticking to parts and clogging your engine’s arteries. Run old oil long enough and your engine will fail—and you’ll be stuck with higher repair bill that not even a new car warranty will cover.</p>
+            <h3>Why Bill Connect?</h3>
+            <p>Bill connect service benefits both customer and Vehicle Degree ,by uploading the bill customer can get 10%cashback* and we can get authentic and accurate real-time data which helps our platform.</p>
+            <h2>"Cars are a major investment. Spending a small amount of time and money each month can keep them going strong for years. Plus, a well-maintained car--with records--is worth more when it comes time to trade it in or sell."</h2>
+          
+          </div>
+        </div>
+        
+      </div>
+    </section>
+    
+    
+    <section class="probootstrap-cta">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <h2 class="probootstrap-animate" data-animate-effect="fadeInRight">We'd like to help and talk with you</h2>
+            <a href="#" role="button" class="btn btn-primary btn-lg btn-ghost probootstrap-animate" data-animate-effect="fadeInLeft">Contact Us</a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <footer class="probootstrap-footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="row">
+              <div class="col-md-4 probootstrap-animate">
+                <div class="probootstrap-footer-widget">
+                  <h3>Links</h3>
+                  <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About US</a></li>
+                    
+                  </ul>
+                </div>
+              </div>
+              <div class="col-md-4 probootstrap-animate">
+                <div class="probootstrap-footer-widget">
+                  <h3>Links</h3>
+                  <ul>
+                    <li><a href="#">Team</a></li>
+                    <li><a href="#">FAQ</a></li>
+                   
+                  </ul>
+                </div>
+              </div>
+              <div class="col-md-4 probootstrap-animate">
+                <div class="probootstrap-footer-widget">
+                  <h3>Links</h3>
+                  <ul>
+                    <li><a href="#">Pricing</a></li>
+                    <li><a href="#">Book Service</a></li>
+                    
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-6 probootstrap-animate">
+            <div class="probootstrap-footer-widget">
+              <h3>Paragraph</h3>
+              <p>For updates on the VehicleDegree° follow us on:</p>
+              <ul class="probootstrap-footer-social">
+                <li><a href="#"><i class="icon-twitter"></i></a></li>
+                <li><a href="#"><i class="icon-facebook"></i></a></li>
+                <li><a href="#"><i class="icon-github"></i></a></li>
+                <li><a href="#"><i class="icon-dribbble"></i></a></li>
+                <li><a href="#"><i class="icon-linkedin"></i></a></li>
+                <li><a href="#"><i class="icon-youtube"></i></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!-- END row -->
+        <div class="row">
+          <div class="col-md-12 copyright probootstrap-animate">
+            <p><small>&copy; 2020 <a href="#">Degree°</a>. All Rights Reserved. <br> Designed &amp; Developed with <i class="icon icon-heart"></i> by <a href="#">Degree°</a></small></p>
+          </div>
+        </div>
+      </div>
+    </footer>
+    
+  
+    <script src="js/scripts.min.js"></script>
+    <script src="js/custom.min.js"></script>
+  </body>
+</html>
